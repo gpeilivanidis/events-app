@@ -5,7 +5,7 @@ const asyncHandler = require('express-async-handler')
 //@route POST /api/events
 //@access Private
 const createEvent = asyncHandler(async (req, res) => {
-    const { title, description, date, location, price, picture, tags } = req.body
+    const { title, description, date, location, price, tags } = req.body
     
     if(!req.user){
         res.status(400)
@@ -24,7 +24,6 @@ const createEvent = asyncHandler(async (req, res) => {
         date,
         location,
         price,
-        picture,
         author: req.user._id,
         tags
     })
@@ -66,7 +65,7 @@ const getEvents = asyncHandler(async (req, res) => {
 //@access Private
 const updateEvent = asyncHandler(async (req, res) => {
 
-    const { title, description, date, location, price, picture, tags, active } = req.body
+    const { title, description, date, location, price, tags, active } = req.body
     
     const event = await Event.findById(req.params.id)
 
@@ -91,7 +90,6 @@ const updateEvent = asyncHandler(async (req, res) => {
         date,
         location,
         price,
-        picture,
         tags,
         active
     }

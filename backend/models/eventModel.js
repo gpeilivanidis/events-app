@@ -26,13 +26,6 @@ const eventSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
-    attendies: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'User'
-    }],
-    picture: {
-        type: String
-    },
     tags: {
         type: [String],
         required: [true, 'Please add at least one tag']
