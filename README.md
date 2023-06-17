@@ -1,5 +1,5 @@
 # events-app
-app for users to create events. Backend finished. Frontend coming.
+app for users to create events. Frontend almost complete, trying to add maps with leaflet.
 
 ## Usage
 
@@ -27,8 +27,10 @@ mongodb+srv://<username>:<password>@<clustername>.asdfqwe.mongodb.net/<dbname>?r
 npm install
 ```
 
-### Run Server
+### Run
 
 ```
 npm run server
+npm run client
+npm run dev
 ```
