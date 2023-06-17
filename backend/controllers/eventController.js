@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const Event = require('../models/eventModel')
 const asyncHandler = require('express-async-handler')
 
@@ -5,27 +6,27 @@ const asyncHandler = require('express-async-handler')
 //@route POST /api/events
 //@access Private
 const createEvent = asyncHandler(async (req, res) => {
-    const { title, description, date, location, price, tags } = req.body
+    const { title, date, location } = req.body
     
     if(!req.user){
         res.status(400)
         throw new Error('must be logged in to create event')
     }
-
-    //location = [lat, lon]
-    if (!title || !date || !tags || !location || location.length !== 2){
+    
+    // location = {
+    //      address,
+    //      [lat,lon]
+    // }
+    if (!title || !date || !location ){
         res.status(400)
-        throw new Error('Please add a title, a date, a location and a tag')
+        throw new Error('Please add a title, a date, a location')
     } 
 
     const event = await Event.create({
         title,
-        description,
         date,
         location,
-        price,
         author: req.user._id,
-        tags
     })
 
     if(event){
@@ -43,21 +44,35 @@ const getEvents = asyncHandler(async (req, res) => {
     const { searchQuery } = req.body
 
     if(!searchQuery){
-        const searchResults = await Event.find({active: true}).sort({date: 1})
+        const searchResults = await Event.find().sort({date: 1}).limit(30)
         res.status(201).json(searchResults)
     } else {
         const searchResults = await Event.find({
-            active: true,
             $or: [
                 { title: { $regex: searchQuery, $options: "i" } },
-                { description: { $regex: searchQuery, $options: "i" } },
-                { price: { $regex: searchQuery, $options: "i" } },
-                { tags: { $regex: searchQuery, $options: "i" } }
+                { location: { $regex: searchQuery, $options: "i" } }
             ]
-        }).sort({date: 1})
+        }).sort({date: 1}).limit(30)
 
         res.status(201).json(searchResults)
     }
+})
+
+//@desc Get my events
+//@route GET /api/events/myEvents
+//@access Private
+const getMyEvents = asyncHandler(async (req, res) => {
+
+    const events = await Event.find({author: req.user.id}).sort({createdAt: 1})
+    res.status(200).json(events)
+})
+
+//@desc Get event
+//@route GET /api/events/:id
+//@access Public
+const getEvent = asyncHandler(async (req, res) => {
+    const event = await Event.findById(req.params.id)
+    res.status(200).json(event)
 })
 
 //@desc Update Event
@@ -65,7 +80,7 @@ const getEvents = asyncHandler(async (req, res) => {
 //@access Private
 const updateEvent = asyncHandler(async (req, res) => {
 
-    const { title, description, date, location, price, tags, active } = req.body
+    const { title, date, location } = req.body
     
     const event = await Event.findById(req.params.id)
 
@@ -79,19 +94,10 @@ const updateEvent = asyncHandler(async (req, res) => {
         throw new Error('Not authorized')
     }
 
-    //events that are old, must be inactive
-    if(date < new Date()){
-        active = false
-    }
-
     const updatedValues = {
         title,
-        description,
         date,
-        location,
-        price,
-        tags,
-        active
+        location
     }
 
     const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updatedValues, {new: true})
@@ -108,6 +114,7 @@ const updateEvent = asyncHandler(async (req, res) => {
 //@route DELETE /api/events/:id
 //@access Private
 const deleteEvent = asyncHandler(async (req, res) => {
+
     const event = await Event.findById(req.params.id)
 
     if(!event){
@@ -122,12 +129,14 @@ const deleteEvent = asyncHandler(async (req, res) => {
 
     await Event.findByIdAndDelete(req.params.id)
 
-    res.status(200).json({message: `${req.params.id} successfully deleted`})
+    res.status(200).json({id: req.params.id})
 })
 
 module.exports = {
     createEvent,
+    getEvent,
     getEvents,
+    getMyEvents,
     updateEvent,
-    deleteEvent
+    deleteEvent,
 }

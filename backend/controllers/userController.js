@@ -70,13 +70,6 @@ const login = asyncHandler(async (req, res) => {
     }
 })
 
-// @desc Get User Data
-// @route GET /api/users/getMe
-// @access Private
-const getMe = asyncHandler(async (req, res) => {
-    res.status(200).json(req.user)
-})
-
 // generate jwt
 const generateToken = (id) =>{
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -87,5 +80,4 @@ const generateToken = (id) =>{
 module.exports = {
     register,
     login,
-    getMe
 }

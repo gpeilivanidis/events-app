@@ -5,35 +5,22 @@ const eventSchema = mongoose.Schema({
         type: String,
         required: [true, 'Please add a title']
     },
-    description: {
-        type: String,
-        default: ''
-    },
     date: {
         type: Date,
         required: [true, 'Please add a date']
     },
     location: {
-        // [lat, lon]
-        type: [Number],
-        required: [true, 'Please add a location']
-    },
-    price: {
-        type: String,
-        default: 'free'
+        address: {
+            type: String,
+            required: [true, 'Please add an address']
+        },
+        // [lat,lon]
+        coordinates: [Number],
     },
     author: {
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    tags: {
-        type: [String],
-        required: [true, 'Please add at least one tag']
-    },
-    active: {
-        type: Boolean,
-        default: true
-    }
 }, {
     timestamps: true
 })
