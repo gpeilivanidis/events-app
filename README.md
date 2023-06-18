@@ -3,6 +3,8 @@ Fullstack events app. Users can create, update, delete their own events.
 Made with express, mongoose, react, redux, leaflet, leaflet-geosearch.
 Finished all functionalities, css left. 
 
+![Event page](showcase/2023-06-19-01:18:02-screenshot.png)
+
 ## Usage
 
 create a .env in root (events-app/.env) and add these lines,
