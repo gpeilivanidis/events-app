@@ -44,7 +44,7 @@ const getEvents = asyncHandler(async (req, res) => {
     const { searchQuery } = req.body
 
     if(!searchQuery){
-        const searchResults = await Event.find().sort({date: 1}).limit(30)
+        const searchResults = await Event.find().sort({date: 1})
         res.status(201).json(searchResults)
     } else {
         const searchResults = await Event.find({
@@ -52,7 +52,7 @@ const getEvents = asyncHandler(async (req, res) => {
                 { title: { $regex: searchQuery, $options: "i" } },
                 { location: { $regex: searchQuery, $options: "i" } }
             ]
-        }).sort({date: 1}).limit(30)
+        }).sort({date: 1})
 
         res.status(201).json(searchResults)
     }
