@@ -1,5 +1,7 @@
 # events-app
-app for users to create events. Frontend almost complete, trying to add maps with leaflet.
+Fullstack events app. Users can create, update, delete their own events.
+Made with express, mongoose, react, redux, leaflet, leaflet-geosearch.
+Finished all functionalities, css left. 
 
 ## Usage
 
@@ -24,6 +26,8 @@ mongodb+srv://<username>:<password>@<clustername>.asdfqwe.mongodb.net/<dbname>?r
 ### Install dependencies
 
 ```
+npm install
+cd frontend
 npm install
 ```
 
