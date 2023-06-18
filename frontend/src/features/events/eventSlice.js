@@ -84,7 +84,7 @@ export const createEvent = createAsyncThunk('events/createEvent', async (eventDa
 })
 
 // update event
-export const updateEvent = createAsyncThunk('evetns/updateEvent', async (id,eventData, thunkAPI) => {
+export const updateEvent = createAsyncThunk('events/updateEvent', async ({id,eventData}, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
         return await eventService.updateEvent(id, eventData, token)
@@ -183,7 +183,7 @@ export const eventSlice = createSlice({
         })
         .addCase(createEvent.fulfilled, (state, action) => {
             state.isLoading = false
-            state.viewEventSuccess = true
+            state.isSuccess = true
             state.viewEvent = action.payload
         })
         .addCase(createEvent.rejected, (state, action) => {
@@ -197,7 +197,7 @@ export const eventSlice = createSlice({
         })
         .addCase(updateEvent.fulfilled, (state, action) => {
             state.isLoading = false
-            state.viewEventSuccess = true
+            state.isSuccess = true
             state.viewEvent = action.payload
         })
         .addCase(updateEvent.rejected, (state, action) => {
@@ -215,7 +215,7 @@ export const eventSlice = createSlice({
             state.events = state.events.filter(
                 (event) => event._id !== action.payload.id
             )
-            state.viewEvent = {}
+            state.viewEvent = null
         })
         .addCase(deleteEvent.rejected, (state, action) => {
             state.isLoading = false

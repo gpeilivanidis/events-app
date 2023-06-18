@@ -7,7 +7,6 @@ import { deleteEvent, getEvent, reset } from "../features/events/eventSlice"
 import {FaRegEdit, FaRegTrashAlt} from 'react-icons/fa'
 import Map from "../components/Map"
 
-
 function Event() {
     const url = useLocation().pathname
     const urlid = url.substring(`/event/`.length)
@@ -56,14 +55,21 @@ function Event() {
                 <button className="btn" type="button" onClick={onDelete}> <FaRegTrashAlt /> </button>
             </div>
         )}       
-        <h1>{viewEvent && viewEvent.title}</h1>
-        <span className="date">
-            {viewEvent && new Date(viewEvent.date.toString()).toISOString().split('T')[0]}
-        </span>
-        <div className="location">
-            <p className="address">{viewEvent && viewEvent.location.address}</p>
-            <Map />
-        </div>
+        {viewEvent && (
+            <>
+                <h1>{viewEvent && viewEvent.title}</h1>
+                <span className="date">
+                    {viewEvent && new Date(viewEvent.date.toString()).toISOString().split('T')[0]}
+                </span>
+                <div className="location">
+                    <p className="address">{viewEvent && viewEvent.location.address}</p>
+                    <Map
+                     mapLocation={viewEvent && viewEvent.location}
+                     search={false}
+                    />
+                </div>
+            </>
+        )}
     </div>
   )
 }

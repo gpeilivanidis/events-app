@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import Spinner from "../components/Spinner"
 import { createEvent, updateEvent, reset, getEvent } from "../features/events/eventSlice"
+import Map from "../components/Map"
 
 function EventForm() {
     const url = useLocation().pathname
@@ -17,9 +18,9 @@ function EventForm() {
     const [formData, setFormData] = useState({
         title: '',
         date: '',
-        address: ''
+        location: ''
     })
-    let {title, date, address} = formData
+    let {title, date, location} = formData
 
     useEffect(() => {
         if(!user){
@@ -45,7 +46,7 @@ function EventForm() {
             setFormData(() => ({
                 title: viewEvent.title,
                 date: new Date(viewEvent.date.toString()).toISOString().split('T')[0],
-                address: viewEvent.location.address
+                location: viewEvent.location
             }))
         }
 
@@ -62,10 +63,11 @@ function EventForm() {
                     navigate('/')
                 }
 
+                // init form with event's data
                 setFormData(() => ({
                     title: viewEvent.title,
                     date: new Date(viewEvent.date.toString()).toISOString().split('T')[0],
-                    address: viewEvent.location.address
+                    location: viewEvent.location
                 }))
             }
         }
@@ -75,33 +77,42 @@ function EventForm() {
         }
     }, [user, viewEvent, isSuccess, viewEventSuccess, isError, message, updateURL, urlid, navigate, dispatch])
 
+    // location from map
+    const onForm = (searchLocation) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            location: searchLocation
+        }))
+    }
+    
     // input change
-    const onChange = (e) => {
+    const onChange = async (e) => {
+
         setFormData((prevState) => ({
             ...prevState,
             [e.target.name]: e.target.value
         }))
     }
 
-    const onSubmit = (e) => {
+    // submit
+    const onSubmit = async (e) => {
         e.preventDefault()
 
         title = title.trim()
         date = date.trim()
-        address = address.trim()
 
-        if(!title || !date || !address){
+        if(!title || !date || !location){
             toast.error('Invalid input')
         }
 
         const eventData = {
             title,
             date,
-            address
+            location
         }
 
         if(updateURL){
-            dispatch(updateEvent(viewEvent._id, eventData))
+            dispatch(updateEvent({id: viewEvent._id, eventData: eventData}))
         } else {
             dispatch(createEvent(eventData))
         }
@@ -123,12 +134,19 @@ function EventForm() {
                 <input type="date" className='form-control' name='date' id='date' value={date} onChange={onChange} />
             </div>
             {/* address */}
-            <div className="form-group">
+            {/* <div className="form-group">
                 <input type="text" className='form-control' name='address' id='address' value={address} placeholder='Address' onChange={onChange} />
-            </div>
+            </div> */}
+            {/* map */}
+            <Map onForm={onForm} mapLocation={(updateURL && viewEvent) && viewEvent.location} />
             {/* submit */}
             <div className="form-group">
-                <button className='btn btn-block' type='submit'>Create Event</button>
+                <button
+                 className='btn btn-block'
+                 type='submit'>
+
+                    {!updateURL ? 'Create Event' : 'Update Event'}
+                </button>
             </div>
         </form>
     </section>
