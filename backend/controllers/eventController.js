@@ -41,7 +41,8 @@ const createEvent = asyncHandler(async (req, res) => {
 //@route GET /api/events
 //@access Public
 const getEvents = asyncHandler(async (req, res) => {
-    const { searchQuery } = req.body
+    // get request sends data in req.query
+    const { searchQuery } = req.query
 
     if(!searchQuery){
         const searchResults = await Event.find().sort({date: 1})
