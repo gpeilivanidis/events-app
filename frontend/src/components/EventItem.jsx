@@ -27,16 +27,20 @@ function EventItem({event}) {
         dispatch(getEvent(event._id))
     }
 
+    // address rendering
+    const splitAddressArray = event.location.address.split(',')
+    const address = splitAddressArray[0] + ', ' + splitAddressArray[splitAddressArray.length-1]
+
     if(isLoading){
         return <Spinner />
     }
 
   return (
-    <button type="button" className="btn-link" onClick={onClick}>
-        <div className="event">
-            <h2 className='event-title'>{event.title}</h2>
-            <div className="event-location">{event.location.address}</div>
-            <div className="event-date">
+    <button type="button" className="home-event-card" onClick={onClick}>
+        <div className="home-event">
+            <h2 className='home-event-title'>{event.title}</h2>
+            <div className="home-event-address">{address}</div>
+            <div className="home-event-date">
                 {new Date(event.date.toString()).toISOString().split('T')[0]}
             </div>
         </div>

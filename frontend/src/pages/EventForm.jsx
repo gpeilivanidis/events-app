@@ -37,7 +37,7 @@ function EventForm() {
         }
 
         // create / update success
-        if(isSuccess){
+        if(isSuccess && viewEvent){
             navigate(`/event/${viewEvent._id}`)
         }
 
@@ -123,33 +123,41 @@ function EventForm() {
     }
     
   return (
-    <section className='form'>
-        <form onSubmit={onSubmit}>
-            {/* title */}
-            <div className="form-group">
-                <input type="text" className='form-control' name='title' id='title' value={title} placeholder='Title' onChange={onChange} />
-            </div>
-            {/* date */}
-            <div className="form-group">
-                <input type="date" className='form-control' name='date' id='date' value={date} onChange={onChange} />
-            </div>
-            {/* address */}
-            {/* <div className="form-group">
-                <input type="text" className='form-control' name='address' id='address' value={address} placeholder='Address' onChange={onChange} />
-            </div> */}
-            {/* map */}
-            <Map onForm={onForm} mapLocation={(updateURL && viewEvent) && viewEvent.location} />
-            {/* submit */}
-            <div className="form-group">
-                <button
-                 className='btn btn-block'
-                 type='submit'>
+    <div className="event-form-container">
+        <div className="event-form-header">
+            <h1>{!updateURL ? 'Create event' : 'Update event'}</h1>
+        </div>
+        <section className='form-container'>
+            <form onSubmit={onSubmit} className="event-form">
+                {/* title */}
+                <div className="form-group">
+                    <input type="text" className='form-control' name='title' id='title' value={title} placeholder='Title' onChange={onChange} />
+                </div>
+                {/* date */}
+                <div className="form-group">
+                    <input type="date" className='form-control' name='date' id='date' value={date} onChange={onChange} />
+                </div>
+                {/* address */}
+                {/* <div className="form-group">
+                    <input type="text" className='form-control' name='address' id='address' value={address} placeholder='Address' onChange={onChange} />
+                </div> */}
+                {/* map */}
+                <div className="form-group">
+                    <Map onForm={onForm} mapLocation={(updateURL && viewEvent) && viewEvent.location} />
+                </div>
+                {/* submit */}
+                <div className="form-group">
+                    <button
+                    className='btn btn-block'
+                    type='submit'>
 
-                    {!updateURL ? 'Create Event' : 'Update Event'}
-                </button>
-            </div>
-        </form>
-    </section>
+                        {!updateURL ? 'Create Event' : 'Update Event'}
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+
   )
 }
 

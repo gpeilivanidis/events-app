@@ -36,14 +36,14 @@ function Login() {
     }
 
     return (
-        <>
-            <section className="heading">
+        <div className='login-container'>
+            <section className="auth-header">
                 <h1>
                     <FaSignInAlt /> Login
                 </h1>
             </section>
-            <section className="form">
-                <form onSubmit={onSubmit}>
+            <section className="form-container">
+                <form onSubmit={onSubmit} className='auth-form'>
                     {/* email */}
                     <div className="form-group">
                         <input type="email" className="form-control" id='email' name='email' value={email} placeholder='Enter your email' onChange={onChange} />
@@ -54,11 +54,11 @@ function Login() {
                     </div>
                     {/* submit */}
                     <div className="form-group">
-                        <button type="submit" className='btn btn-block'>Login</button>
+                        <button type="submit" className='btn btn-block' title='Login'>Login</button>
                     </div>
                 </form>
             </section>
-        </>
+        </div>
     )
 }
 

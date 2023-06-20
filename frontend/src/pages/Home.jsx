@@ -37,8 +37,8 @@ function Home() {
     }
 
   return (
-    <>
-        <div className="heading">
+    <div className='home-container'>
+        <div className="home-header">
             {location === '/' ? (
                 <h1>Welcome {user && user.name}</h1>
             ) : (
@@ -46,11 +46,11 @@ function Home() {
             )}
         </div>
         {/* render the events in the state */}
-        <div className="content">
+        <div className="home-content">
 
             {events.length > 0 ? (
 
-                <div className="events">
+                <div className="home-events">
                     {events.map((event) => (
 
                         <EventItem key={event._id} event={event} />
@@ -61,7 +61,7 @@ function Home() {
                 <h3>No events found</h3>
             )}
         </div>
-    </>
+    </div>
   )
 }
 

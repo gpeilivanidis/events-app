@@ -48,28 +48,28 @@ function Event() {
     
   return (
     <div className="event">
-
-        {user && viewEvent && (user._id === viewEvent.author) && (
-            <div className="event-header">
-                <button className="btn" type="button" onClick={onEdit}> <FaRegEdit /> </button>
-                <button className="btn" type="button" onClick={onDelete}> <FaRegTrashAlt /> </button>
-            </div>
-        )}       
         {viewEvent && (
-            <>
-                <h1>{viewEvent && viewEvent.title}</h1>
-                <span className="date">
+            <div className="event-content">
+                <h1 className="event-title">{viewEvent && viewEvent.title}</h1>
+                <span className="event-date">
                     {viewEvent && new Date(viewEvent.date.toString()).toISOString().split('T')[0]}
                 </span>
-                <div className="location">
-                    <p className="address">{viewEvent && viewEvent.location.address}</p>
+                <div className="event-location">
+                    <p className="event-address">{viewEvent && viewEvent.location.address}</p>
                     <Map
                      mapLocation={viewEvent && viewEvent.location}
                      search={false}
                     />
                 </div>
-            </>
+            </div>
         )}
+
+        {user && viewEvent && (user._id === viewEvent.author) && (
+            <div className="event-footer">
+                <button className="btn btn-header" type="button" onClick={onEdit} title="Edit event"> <FaRegEdit /> </button>
+                <button className="btn btn-header" type="button" onClick={onDelete} title="Delete event"> <FaRegTrashAlt /> </button>
+            </div>
+        )}   
     </div>
   )
 }

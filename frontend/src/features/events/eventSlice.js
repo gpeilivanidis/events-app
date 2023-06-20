@@ -12,9 +12,9 @@ const initialState = {
 }
 
 // get events
-export const getEvents = createAsyncThunk('events/getEvents',async (searchQuery = '',thunkAPI) => {
+export const getEvents = createAsyncThunk('events/getEvents',async (_, thunkAPI) => {
     try {
-        return await eventService.getEvents(searchQuery)
+        return await eventService.getEvents()
     } catch (error) {
 
         const message =
@@ -225,5 +225,5 @@ export const eventSlice = createSlice({
     }
 })
 
-export const {reset} = eventSlice.actions
+export const {reset, searchReset} = eventSlice.actions
 export default eventSlice.reducer

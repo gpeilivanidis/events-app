@@ -27,7 +27,7 @@ function Auth() {
 
     return (
         <>
-            <div className="authContainer">
+            <div className="auth-container">
                 <Login />
                 <Register />
             </div>

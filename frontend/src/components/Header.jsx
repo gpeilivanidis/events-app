@@ -26,32 +26,32 @@ function Header() {
     }
 
   return (
-    <header className='header'>
+    <header className='main-header'>
         <div className="logo">
-            <Link to='/'>Events App</Link>
+            <Link to='/' className='logo-text no-underline'>Events App</Link>
         </div>
-        <ul>
+        <ul className='header-buttons'>
             {user ? (
                 <>
                     <li>
-                        <button className='btn' onClick={onAdd}>
-                            <FaPlus /> Create Event
+                        <button className='btn btn-header' onClick={onAdd} title='Create event'>
+                            <FaPlus />
                         </button>
                     </li>
                     <li>
-                        <button className='btn' onClick={onMyEvents}>
-                            <FaRegHeart /> My Events
+                        <button className='btn btn-header' onClick={onMyEvents} title='My events'>
+                            <FaRegHeart />
                         </button>
                     </li>
                     <li>
-                        <button className='btn' onClick={onLogout}>
+                        <button className='btn btn-header' onClick={onLogout} title='Logout'>
                             <FaSignOutAlt /> Logout
                         </button>
                     </li>
                 </>
             ) : (
                 <li>
-                    <Link to='/auth'>
+                    <Link to='/auth' className='no-underline btn btn-header'>
                         <FaSignInAlt /> Login
                     </Link>
                 </li>

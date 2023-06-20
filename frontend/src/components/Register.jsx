@@ -44,14 +44,14 @@ function Register() {
     }
 
     return (
-        <>
-            <section className="heading">
+        <div className='register-container'>
+            <section className="auth-header">
                 <h1>
                     <FaUser /> Register
                 </h1>
             </section>
-            <section className="form">
-                <form  onSubmit={onSubmit}>
+            <section className="form-container">
+                <form  onSubmit={onSubmit} className='auth-form'>
                     {/* name */}
                     <div className="form-group">
                         <input type="text" className="form-control" id='name' name='name' value={name} placeholder='Enter your name' onChange={onChange} />
@@ -70,11 +70,11 @@ function Register() {
                     </div>
                     {/* submit */}
                     <div className="form-group">
-                        <button type="submit" className='btn btn-block'>Register</button>
+                        <button type="submit" className='btn btn-block' title='Register'>Register</button>
                     </div>
                 </form>
             </section>
-        </>
+        </div>
     )
 }
 

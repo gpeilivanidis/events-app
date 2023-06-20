@@ -3,8 +3,8 @@ import axios from 'axios'
 const API_URL = '/api/events/'
 
 const getEvents = async (searchQuery) => {
-    // search query has to be an object property
-    const response = await axios.get(API_URL, {searchQuery})
+    // get requests must be send inside {params: {}}
+    const response = await axios.get(API_URL, {params: searchQuery})
     return response.data
 }
 
