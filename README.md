@@ -7,7 +7,7 @@ Made with express, mongoose, react, redux, leaflet, leaflet-geosearch.
 
 Finished all functionalities, css left. 
 
-![Event page](showcase/2023-06-19-01:18:02-screenshot.png)
+![Event page](showcase/2023-06-20-16:45:57-screenshot.png)
 
 ## Usage
 
